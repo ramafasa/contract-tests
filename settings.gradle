@@ -1,0 +1,4 @@
+rootProject.name = 'contract-tests'
+include 'order-service'
+include 'payment-service'
+

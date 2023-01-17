@@ -1,0 +1,36 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.0.1'
+    id 'io.spring.dependency-management' version '1.1.0'
+
+    id 'groovy'
+}
+
+group 'com.rmaciak'
+version '0.0.1-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    testImplementation 'org.spockframework:spock-core:2.4-M1-groovy-3.0'
+    testImplementation 'org.spockframework:spock-spring:2.4-M1-groovy-3.0'
+    testImplementation 'org.codehaus.groovy:groovy-all:3.0.0'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+
+    testImplementation "com.github.tomakehurst:wiremock-jre8-standalone:2.35.0"
+    implementation group: 'com.github.tomjankes', name: 'wiremock-groovy', version: '0.2.0'
+}
+
+test {
+    useJUnitPlatform()
+}
