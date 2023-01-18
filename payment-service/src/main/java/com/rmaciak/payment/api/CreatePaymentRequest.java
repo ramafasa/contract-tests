@@ -10,7 +10,6 @@ import java.util.UUID;
 
 public record CreatePaymentRequest(
         UUID accountId,
-        String orderDescription,
         BigDecimal quota,
         PaymentType paymentType,
         LocalDateTime dueDate) {
