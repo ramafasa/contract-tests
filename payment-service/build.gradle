@@ -4,9 +4,11 @@ plugins {
     id 'io.spring.dependency-management' version '1.1.0'
     id 'groovy'
     id 'org.springframework.cloud.contract' version '4.0.0'
+    id 'maven-publish'
 }
 
 apply plugin: 'spring-cloud-contract'
+apply plugin: 'maven-publish'
 
 group 'com.rmaciak'
 version '0.0.1-SNAPSHOT'
@@ -45,4 +47,12 @@ contractTest {
 
 test {
     useJUnitPlatform()
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifact verifierStubsJar
+        }
+    }
 }

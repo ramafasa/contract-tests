@@ -10,7 +10,6 @@ Contract.make {
         urlPath $(consumer(regex('/payment/' + uuid())))
         body([
                 accountId       : $(consumer(anyUuid())),
-                orderDescription: $(consumer(nonBlank()), producer('My first order')),
                 quota           : $(consumer(anyDouble())),
                 paymentType     : $(consumer(regex('TRANSFER_(OFFLINE|ONLINE)'))),
                 dueDate         : $(consumer(anyDateTime()))
