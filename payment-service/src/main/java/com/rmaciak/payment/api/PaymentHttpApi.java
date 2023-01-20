@@ -1,14 +1,17 @@
 package com.rmaciak.payment.api;
 
+import com.rmaciak.payment.domain.NonPositivePaymentQuotaException;
 import com.rmaciak.payment.domain.PaymentExecutor;
+import com.rmaciak.payment.domain.PaymentStatus;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
+import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
@@ -22,12 +25,16 @@ public class PaymentHttpApi {
             @PathVariable UUID paymentId,
             @RequestBody CreatePaymentRequest request) {
 
-        var response = new CreatePaymentResponse(
+        return new CreatePaymentResponse(
                 "ext-" + paymentId,
-                paymentExecutor.initiatePayment(request.accountId(), request.quota(), request.paymentType(), request.dueDate())
+                paymentExecutor.initiatePayment(request.quota(), request.paymentType())
         );
-
-        return response;
     }
 
+    @ExceptionHandler({NonPositivePaymentQuotaException.class})
+    public ResponseEntity<CreatePaymentResponse> handleException() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(APPLICATION_JSON);
+        return new ResponseEntity<>(new CreatePaymentResponse(null, PaymentStatus.FAILED), headers, UNPROCESSABLE_ENTITY);
+    }
 }

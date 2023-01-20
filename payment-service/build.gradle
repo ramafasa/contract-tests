@@ -7,7 +7,6 @@ plugins {
     id 'maven-publish'
 }
 
-apply plugin: 'spring-cloud-contract'
 apply plugin: 'maven-publish'
 
 group 'com.rmaciak'
@@ -36,6 +35,7 @@ dependencies {
 contracts {
     testFramework = "SPOCK"
     baseClassForTests = "com.rmaciak.payment.BaseContractTestsSpec"
+//    testMode = "EXPLICIT"
 }
 
 contractTest {
