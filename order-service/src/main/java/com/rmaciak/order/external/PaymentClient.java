@@ -1,6 +1,7 @@
 package com.rmaciak.order.external;
 
 
+import com.rmaciak.order.domain.PaymentType;
 import com.rmaciak.order.domain.service.PaymentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
@@ -15,6 +16,8 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.UUID;
 
+import static com.rmaciak.order.domain.PaymentType.TRANSFER_OFFLINE;
+import static com.rmaciak.order.domain.PaymentType.TRANSFER_ONLINE;
 import static java.time.temporal.ChronoUnit.HOURS;
 import static java.time.temporal.ChronoUnit.SECONDS;
 import static org.springframework.http.HttpMethod.PUT;
@@ -27,7 +30,22 @@ public class PaymentClient implements PaymentService {
     private final Clock clock;
 
     @Override
-    public boolean initiatePayment(UUID accountId, UUID orderId, BigDecimal amount) {
+    public boolean executeOnlinePayment(UUID accountId, UUID orderId, BigDecimal amount) {
+        InitiatePaymentResponse response = initiatePayment(accountId, orderId, amount, TRANSFER_ONLINE);
+        return response.getStatus().equals("FINISHED");
+    }
+
+    @Override
+    public boolean initiateOfflinePayment(UUID accountId, UUID orderId, BigDecimal amount) {
+        InitiatePaymentResponse response = initiatePayment(accountId, orderId, amount, TRANSFER_OFFLINE);
+        return response.getStatus().equals("IN_PROGRESS");
+    }
+
+    private InitiatePaymentResponse initiatePayment(
+            UUID accountId,
+            UUID orderId,
+            BigDecimal amount,
+            PaymentType paymentType) {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -36,23 +54,21 @@ public class PaymentClient implements PaymentService {
                 new InitiatePaymentRequest(
                         accountId,
                         amount,
-                        "TRANSFER_OFFLINE",
+                        paymentType,
                         LocalDateTime.ofInstant(clock.instant().plus(1, HOURS), ZoneId.systemDefault()).truncatedTo(SECONDS)
                 ),
                 headers
         );
 
-        InitiatePaymentResponse response = restTemplate
+        return restTemplate
                 .exchange("http://localhost:8088/payment/%s".formatted(orderId), PUT, request, InitiatePaymentResponse.class)
                 .getBody();
-
-        return response.getStatus().equals("FINISHED");
     }
 
-    public record InitiatePaymentRequest(
+    private record InitiatePaymentRequest(
             UUID accountId,
             BigDecimal quota,
-            String paymentType,
+            PaymentType paymentType,
             LocalDateTime dueDate) {
     }
 }
