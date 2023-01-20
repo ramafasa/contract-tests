@@ -11,7 +11,7 @@ Contract.make {
         body([
                 accountId  : $(consumer(anyUuid())),
                 quota      : $(consumer(regex('^(\\d+\\.\\d+)$')), producer(1024.50)),
-                paymentType: $(consumer(regex('^TRANSFER_(OFFLINE|ONLINE)$')), producer('TRANSFER_ONLINE')),
+                paymentType: 'TRANSFER_ONLINE',
                 dueDate    : $(consumer(anyDateTime()))
         ])
         headers {
