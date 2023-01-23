@@ -19,7 +19,6 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
-    testImplementation 'org.springframework.cloud:spring-cloud-starter-contract-verifier:4.0.0'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'io.rest-assured:rest-assured:5.3.0'
     testImplementation 'org.spockframework:spock-core:2.4-M1-groovy-4.0'
