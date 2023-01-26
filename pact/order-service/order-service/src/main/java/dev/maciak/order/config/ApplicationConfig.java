@@ -1,4 +1,4 @@
-package com.rmaciak.order.config;
+package dev.maciak.order.config;
 
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;

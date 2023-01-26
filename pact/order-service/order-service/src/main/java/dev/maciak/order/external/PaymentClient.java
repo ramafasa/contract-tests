@@ -1,8 +1,8 @@
-package com.rmaciak.order.external;
+package dev.maciak.order.external;
 
 
-import com.rmaciak.order.domain.PaymentType;
-import com.rmaciak.order.domain.service.PaymentService;
+import dev.maciak.order.domain.PaymentType;
+import dev.maciak.order.domain.service.PaymentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -16,8 +16,8 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.UUID;
 
-import static com.rmaciak.order.domain.PaymentType.TRANSFER_OFFLINE;
-import static com.rmaciak.order.domain.PaymentType.TRANSFER_ONLINE;
+import static dev.maciak.order.domain.PaymentType.TRANSFER_OFFLINE;
+import static dev.maciak.order.domain.PaymentType.TRANSFER_ONLINE;
 import static java.time.temporal.ChronoUnit.HOURS;
 import static java.time.temporal.ChronoUnit.SECONDS;
 import static org.springframework.http.HttpMethod.PUT;

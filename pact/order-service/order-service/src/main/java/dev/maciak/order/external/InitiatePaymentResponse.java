@@ -1,4 +1,4 @@
-package com.rmaciak.order.external;
+package dev.maciak.order.external;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

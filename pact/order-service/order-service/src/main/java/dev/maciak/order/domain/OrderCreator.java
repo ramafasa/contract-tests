@@ -1,7 +1,7 @@
-package com.rmaciak.order.domain;
+package dev.maciak.order.domain;
 
 
-import com.rmaciak.order.domain.service.PaymentService;
+import dev.maciak.order.domain.service.PaymentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

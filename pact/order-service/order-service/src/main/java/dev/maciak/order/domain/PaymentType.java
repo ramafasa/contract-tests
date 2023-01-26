@@ -1,4 +1,4 @@
-package com.rmaciak.order.domain;
+package dev.maciak.order.domain;
 
 public enum PaymentType {
     TRANSFER_OFFLINE,

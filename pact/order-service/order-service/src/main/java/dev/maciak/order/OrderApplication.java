@@ -1,4 +1,4 @@
-package com.rmaciak.order;
+package dev.maciak.order;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

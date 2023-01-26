@@ -1,7 +1,7 @@
-package com.rmaciak.order.utils
+package dev.maciak.order.utils
 
 import com.github.tomakehurst.wiremock.WireMockServer
-import com.rmaciak.order.OrderApplication
+import dev.maciak.order.OrderApplication
 import org.springframework.boot.test.context.SpringBootTest
 import spock.lang.Shared
 import spock.lang.Specification

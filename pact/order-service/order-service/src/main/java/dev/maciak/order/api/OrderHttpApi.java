@@ -1,6 +1,6 @@
-package com.rmaciak.order.api;
+package dev.maciak.order.api;
 
-import com.rmaciak.order.domain.OrderCreator;
+import dev.maciak.order.domain.OrderCreator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.math.BigDecimal;
 import java.util.UUID;
 
-import static com.rmaciak.order.domain.PaymentType.TRANSFER_ONLINE;
+import static dev.maciak.order.domain.PaymentType.TRANSFER_ONLINE;
 
 @RestController
 @RequiredArgsConstructor

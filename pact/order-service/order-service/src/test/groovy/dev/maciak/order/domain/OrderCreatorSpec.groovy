@@ -1,6 +1,6 @@
-package com.rmaciak.order.domain
+package dev.maciak.order.domain
 
-import com.rmaciak.order.utils.WireMockSpec
+import dev.maciak.order.utils.WireMockSpec
 import org.springframework.beans.factory.annotation.Autowired
 import spock.lang.Subject
 
@@ -9,7 +9,7 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*
-import static com.rmaciak.order.domain.PaymentType.TRANSFER_ONLINE
+import static PaymentType.TRANSFER_ONLINE
 import static java.time.temporal.ChronoUnit.HOURS
 import static java.time.temporal.ChronoUnit.SECONDS
 import static java.util.UUID.randomUUID

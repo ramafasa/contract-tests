@@ -1,4 +1,4 @@
-package com.rmaciak.order.domain.service;
+package dev.maciak.order.domain.service;
 
 import java.math.BigDecimal;
 import java.util.UUID;
