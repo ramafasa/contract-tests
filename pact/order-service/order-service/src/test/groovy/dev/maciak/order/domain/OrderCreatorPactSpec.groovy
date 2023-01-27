@@ -53,7 +53,7 @@ class OrderCreatorPactSpec extends Specification {
                     status: 200,
                     headers: ['Content-Type': APPLICATION_JSON_VALUE],
                     body: {
-                        paymentId('ext-')
+                        paymentId("ext-$orderIdVal")
                         status('FINISHED')
                     }
             )
@@ -73,14 +73,15 @@ class OrderCreatorPactSpec extends Specification {
         def orderIdVal = randomUUID()
         def quotaVal = BigDecimal.valueOf(1040.42)
 
-        given: 'payment-service executes online payment correctly'
+        given: 'payment-service returns error due to negative quota'
         def paymentService = new PactBuilder()
         paymentService {
+
             serviceConsumer "order-service"
             hasPactWith "payment-service"
             port 8088
 
-            uponReceiving('a request to execute online payment with negative quota"')
+            uponReceiving('a request to execute online payment with negative quota')
             withAttributes(
                     method: 'PUT',
                     path: regexp("/payment/$UUID_REGEXP", "/payment/$orderIdVal"),
