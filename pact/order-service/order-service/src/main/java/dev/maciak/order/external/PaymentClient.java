@@ -6,14 +6,15 @@ import dev.maciak.order.domain.service.PaymentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
 import java.time.Clock;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.List;
 import java.util.UUID;
 
 import static dev.maciak.order.domain.PaymentType.TRANSFER_OFFLINE;
@@ -21,6 +22,7 @@ import static dev.maciak.order.domain.PaymentType.TRANSFER_ONLINE;
 import static java.time.temporal.ChronoUnit.HOURS;
 import static java.time.temporal.ChronoUnit.SECONDS;
 import static org.springframework.http.HttpMethod.PUT;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 @RequiredArgsConstructor
 @Service
@@ -48,7 +50,8 @@ public class PaymentClient implements PaymentService {
             PaymentType paymentType) {
 
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setAccept(List.of(APPLICATION_JSON));
+        headers.setContentType(APPLICATION_JSON);
 
         HttpEntity<InitiatePaymentRequest> request = new HttpEntity<>(
                 new InitiatePaymentRequest(
@@ -60,9 +63,13 @@ public class PaymentClient implements PaymentService {
                 headers
         );
 
-        return restTemplate
-                .exchange("http://localhost:8088/payment/%s".formatted(orderId), PUT, request, InitiatePaymentResponse.class)
-                .getBody();
+        try {
+            return restTemplate
+                    .exchange("http://localhost:8088/payment/%s".formatted(orderId), PUT, request, InitiatePaymentResponse.class)
+                    .getBody();
+        } catch (HttpStatusCodeException exception) {
+            return InitiatePaymentResponse.withError();
+        }
     }
 
     private record InitiatePaymentRequest(
