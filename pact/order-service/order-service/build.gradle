@@ -19,6 +19,8 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
 
     testImplementation group: 'au.com.dius.pact.consumer', name: 'junit5', version: '4.4.4'
+    testImplementation 'au.com.dius.pact.consumer:groovy:4.4.4'
+
     testImplementation group: 'com.github.tomakehurst', name: 'wiremock-jre8-standalone', version: '2.35.0'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.spockframework:spock-core:2.4-M1-groovy-4.0'
@@ -26,6 +28,11 @@ dependencies {
     testImplementation 'org.apache.groovy:groovy-all:4.0.6'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+
+}
+
+compileTestGroovy {
+    groovyClasspath = configurations.testCompileClasspath
 }
 
 test {
