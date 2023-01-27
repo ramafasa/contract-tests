@@ -53,7 +53,7 @@ class OrderCreatorPactSpec extends Specification {
                     status: 200,
                     headers: ['Content-Type': APPLICATION_JSON_VALUE],
                     body: {
-                        paymentId("ext-$orderIdVal")
+                        paymentExternalId("ext-$orderIdVal")
                         status('FINISHED')
                     }
             )
