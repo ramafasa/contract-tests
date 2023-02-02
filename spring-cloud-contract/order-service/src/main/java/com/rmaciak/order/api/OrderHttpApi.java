@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.math.BigDecimal;
 import java.util.UUID;
 
-import static com.rmaciak.order.domain.PaymentType.TRANSFER_ONLINE;
-
 @RestController
 @RequiredArgsConstructor
 public class OrderHttpApi {
@@ -21,6 +19,6 @@ public class OrderHttpApi {
     public void createOrder(
             @PathVariable UUID orderID
     ) {
-        orderCreator.createOrder(UUID.randomUUID(), orderID, BigDecimal.TEN, TRANSFER_ONLINE);
+        orderCreator.createOrder(UUID.randomUUID(), orderID, BigDecimal.TEN);
     }
 }

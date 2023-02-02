@@ -16,7 +16,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.UUID;
 
-import static com.rmaciak.order.domain.PaymentType.TRANSFER_OFFLINE;
 import static com.rmaciak.order.domain.PaymentType.TRANSFER_ONLINE;
 import static java.time.temporal.ChronoUnit.HOURS;
 import static java.time.temporal.ChronoUnit.SECONDS;
@@ -33,12 +32,6 @@ public class PaymentClient implements PaymentService {
     public boolean executeOnlinePayment(UUID accountId, UUID orderId, BigDecimal amount) {
         InitiatePaymentResponse response = initiatePayment(accountId, orderId, amount, TRANSFER_ONLINE);
         return response.getStatus().equals("FINISHED");
-    }
-
-    @Override
-    public boolean initiateOfflinePayment(UUID accountId, UUID orderId, BigDecimal amount) {
-        InitiatePaymentResponse response = initiatePayment(accountId, orderId, amount, TRANSFER_OFFLINE);
-        return response.getStatus().equals("IN_PROGRESS");
     }
 
     private InitiatePaymentResponse initiatePayment(

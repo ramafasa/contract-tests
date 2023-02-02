@@ -9,7 +9,6 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*
-import static com.rmaciak.order.domain.PaymentType.TRANSFER_ONLINE
 import static java.time.temporal.ChronoUnit.HOURS
 import static java.time.temporal.ChronoUnit.SECONDS
 import static java.util.UUID.randomUUID
@@ -61,6 +60,6 @@ class OrderCreatorSpec extends WireMockSpec {
         )
 
         expect:
-        sut.createOrder(accountId, orderId, quota, TRANSFER_ONLINE).paymentProcessed()
+        sut.createOrder(accountId, orderId, quota).paymentProcessed()
     }
 }

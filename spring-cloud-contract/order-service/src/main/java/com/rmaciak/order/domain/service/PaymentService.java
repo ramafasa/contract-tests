@@ -5,5 +5,4 @@ import java.util.UUID;
 
 public interface PaymentService {
     boolean executeOnlinePayment(UUID accountId, UUID orderId, BigDecimal amount);
-    boolean initiateOfflinePayment(UUID accountId, UUID orderId, BigDecimal amount);
 }

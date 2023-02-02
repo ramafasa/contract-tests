@@ -14,15 +14,8 @@ public class OrderCreator {
 
     private final PaymentService paymentService;
 
-    public OrderCreationResult createOrder(UUID accountId, UUID orderId, BigDecimal amount, PaymentType paymentType) {
+    public OrderCreationResult createOrder(UUID accountId, UUID orderId, BigDecimal quota) {
         // some logic here...
-
-        return new OrderCreationResult(
-                switch (paymentType) {
-                    case TRANSFER_ONLINE -> paymentService.executeOnlinePayment(accountId, orderId, amount);
-                    case TRANSFER_OFFLINE -> paymentService.initiateOfflinePayment(accountId, orderId, amount);
-                }
-        );
+        return new OrderCreationResult(paymentService.executeOnlinePayment(accountId, orderId, quota));
     }
-
 }
