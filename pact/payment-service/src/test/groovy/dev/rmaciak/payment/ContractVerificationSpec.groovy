@@ -19,7 +19,6 @@ class ContractVerificationSpec extends Specification {
 
     @Shared
     ProviderInfo serviceProvider
-
     ProviderVerifier verifier
 
     def setupSpec() {
@@ -32,7 +31,7 @@ class ContractVerificationSpec extends Specification {
         serviceProvider.port = port
     }
 
-    def 'verify pact with #consumer'() {
+    def 'verify contract with #consumer'() {
         expect:
         verifyConsumerPact(consumer) instanceof VerificationResult.Ok
 
@@ -42,12 +41,12 @@ class ContractVerificationSpec extends Specification {
 
     private VerificationResult verifyConsumerPact(ConsumerInfo consumer) {
         verifier.initialiseReporters(serviceProvider)
-        def result = verifier.runVerificationForConsumer([:], serviceProvider, consumer)
+        def testResult = verifier.runVerificationForConsumer([:], serviceProvider, consumer)
 
-        if (result instanceof VerificationResult.Failed) {
-            verifier.displayFailures([result])
+        if (testResult instanceof VerificationResult.Failed) {
+            verifier.displayFailures([testResult])
         }
 
-        result
+        testResult
     }
 }
