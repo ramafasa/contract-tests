@@ -3,7 +3,7 @@ package contracts.orderService
 import org.springframework.cloud.contract.spec.Contract
 
 Contract.make {
-//    name("Should produce OrderCreated event when order was created")
+    description("Should produce OrderCreated event when order was created")
     label("triggerOrderCreatedEvent")
     input {
         triggeredBy("createOrder()")

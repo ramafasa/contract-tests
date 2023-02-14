@@ -15,20 +15,38 @@ import org.springframework.messaging.Message
 import org.springframework.messaging.MessageHeaders
 import org.springframework.messaging.support.MessageBuilder
 import org.springframework.test.context.ActiveProfiles
+import org.springframework.test.context.DynamicPropertyRegistry
+import org.springframework.test.context.DynamicPropertySource
+import org.testcontainers.containers.KafkaContainer
+import org.testcontainers.spock.Testcontainers
+import org.testcontainers.utility.DockerImageName
+import spock.lang.Shared
 import spock.lang.Specification
 
 import javax.annotation.Nullable
 import java.util.concurrent.TimeUnit
 
 import static java.util.Collections.emptyMap
+import static java.util.concurrent.TimeUnit.SECONDS
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE, classes = [OrderApplication.class])
+@SpringBootTest(webEnvironment = NONE, classes = [OrderApplication.class])
 @AutoConfigureMessageVerifier
 @ActiveProfiles("test")
+@Testcontainers
 abstract class BaseContractTestsSpec extends Specification {
+
+    @Shared
+    static KafkaContainer kafka = new KafkaContainer(DockerImageName.parse("confluentinc/cp-kafka:latest"))
 
     @Autowired
     private OrderCreator orderCreator
+
+    @DynamicPropertySource
+    static void kafkaProperties(DynamicPropertyRegistry registry) {
+        kafka.start()
+        registry.add("spring.kafka.bootstrap-servers", () -> kafka.getBootstrapServers())
+    }
 
     void createOrder() {
         orderCreator.createOrder(
@@ -53,8 +71,8 @@ class KafkaEventVerifier implements MessageVerifierReceiver<Message<?>> {
 
     private final Set<Message> consumedEvents = Collections.synchronizedSet(new HashSet<Message>())
 
-    @KafkaListener(topics = ["OrderCreated"])
-    void listenOrderCreated(ConsumerRecord payload) {
+    @KafkaListener(topics = ["OrderCreated"], groupId = "order-consumer")
+    void consumeOrderCreated(ConsumerRecord payload) {
         consumedEvents.add(MessageBuilder.createMessage(payload.value(), new MessageHeaders(emptyMap())))
     }
 
@@ -66,7 +84,7 @@ class KafkaEventVerifier implements MessageVerifierReceiver<Message<?>> {
                 return msg
             }
 
-            Thread.sleep(1000)
+            timeUnit.sleep(1)
         }
 
         return consumedEvents.stream().findFirst().orElse(null)
@@ -74,6 +92,6 @@ class KafkaEventVerifier implements MessageVerifierReceiver<Message<?>> {
 
     @Override
     Message receive(String destination, YamlContract contract) {
-        return receive(destination, 5, TimeUnit.SECONDS, contract)
+        return receive(destination, 5, SECONDS, contract)
     }
 }
