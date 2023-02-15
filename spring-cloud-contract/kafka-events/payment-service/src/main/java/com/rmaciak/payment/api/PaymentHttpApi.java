@@ -27,7 +27,7 @@ public class PaymentHttpApi {
 
         return new CreatePaymentResponse(
                 "ext-" + paymentId,
-                paymentExecutor.initiatePayment(request.quota(), request.paymentType())
+                paymentExecutor.initiatePayment(paymentId, request.quota()).paymentStatus()
         );
     }
 

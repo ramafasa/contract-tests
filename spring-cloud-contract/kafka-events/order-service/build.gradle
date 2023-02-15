@@ -24,6 +24,8 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
+    testImplementation 'org.testcontainers:spock:1.17.6'
+    testImplementation 'org.testcontainers:kafka:1.17.6'
     testImplementation 'org.springframework.cloud:spring-cloud-starter-contract-verifier:4.0.0'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.spockframework:spock-core:2.4-M1-groovy-4.0'
@@ -36,7 +38,6 @@ dependencies {
 contracts {
     testFramework = "SPOCK"
     baseClassForTests = "com.rmaciak.order.BaseContractTestsSpec"
-//    testMode = "EXPLICIT"
 }
 
 contractTest {

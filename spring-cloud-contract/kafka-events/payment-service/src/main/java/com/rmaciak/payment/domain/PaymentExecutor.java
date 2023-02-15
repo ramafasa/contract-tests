@@ -1,31 +1,32 @@
 package com.rmaciak.payment.domain;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.UUID;
 
-import static com.rmaciak.payment.domain.PaymentStatus.FINISHED;
-import static com.rmaciak.payment.domain.PaymentStatus.IN_PROGRESS;
-import static com.rmaciak.payment.domain.PaymentType.TRANSFER_ONLINE;
-
 @Service
+@AllArgsConstructor
 public class PaymentExecutor {
 
-    public PaymentStatus initiatePayment(
-            BigDecimal quota,
-            PaymentType type
+    private final PaymentRepository paymentRepository;
+
+    public Payment initiatePayment(
+            UUID paymentId,
+            BigDecimal quota
     ) {
 
         if (quota.signum() != 1) {
             throw new NonPositivePaymentQuotaException();
         }
 
-        if (type == TRANSFER_ONLINE) {
-            return FINISHED;
-        } else {
-            return IN_PROGRESS;
-        }
+        var payment = Payment.finishedOnlinePayment(
+                paymentId,
+                quota
+        );
+
+        paymentRepository.save(payment);
+        return payment;
     }
 }
