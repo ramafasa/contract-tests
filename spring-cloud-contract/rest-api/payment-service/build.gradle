@@ -35,7 +35,6 @@ dependencies {
 contracts {
     testFramework = "SPOCK"
     baseClassForTests = "com.rmaciak.payment.BaseContractTestsSpec"
-//    testMode = "EXPLICIT"
 }
 
 contractTest {
