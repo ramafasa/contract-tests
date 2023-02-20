@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class KafkaEventPublisher implements DomainEventPublisher {
 
-    private final KafkaTemplate<Object, Object> template;
+    private final KafkaTemplate<String, DomainEvent> template;
 
     @Override
     public void publish(DomainEvent domainEvent) {
