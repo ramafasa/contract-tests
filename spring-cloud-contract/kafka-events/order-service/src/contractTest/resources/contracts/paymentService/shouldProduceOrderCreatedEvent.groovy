@@ -15,7 +15,7 @@ Contract.make {
                 occurredAt: anyDateTime(),
                 orderId: anyUuid(),
                 accountId: anyUuid(),
-                total: $(consumer(regex('^(\\d+\\.\\d+)$')))
+                total: $(consumer(regex("(\\d+\\.\\d+)")))
         ])
     }
 }
