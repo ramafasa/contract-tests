@@ -2,14 +2,16 @@ package com.rmaciak.order.domain;
 
 
 import com.rmaciak.order.domain.service.PaymentService;
-import com.rmaciak.order.events.DomainEvent;
 import com.rmaciak.order.events.DomainEventPublisher;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.Clock;
+import java.time.LocalDateTime;
 import java.util.UUID;
+
+import static java.time.temporal.ChronoUnit.SECONDS;
 
 @RequiredArgsConstructor
 @Service
@@ -27,13 +29,12 @@ public class OrderCreator {
         eventPublisher.publish(
                 new OrderCreatedEvent(
                         UUID.randomUUID(),
-                        clock.instant(),
+                        LocalDateTime.now(clock).truncatedTo(SECONDS),
                         orderId,
                         accountId,
                         quota,
                         isOrderPaid
-                ) {
-                }
+                )
         );
 
         return new OrderCreationResult(isOrderPaid);

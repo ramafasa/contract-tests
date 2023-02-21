@@ -1,4 +1,4 @@
-package contracts.orderService
+package contracts.paymentService
 
 import org.springframework.cloud.contract.spec.Contract
 
@@ -11,10 +11,11 @@ Contract.make {
     outputMessage {
         sentTo("OrderCreated")
         body([
+                eventId: anyUuid(),
+                occurredAt: anyDateTime(),
                 orderId: anyUuid(),
                 accountId: anyUuid(),
-                total: 120.80,
-                isPaid: true
+                total: $(consumer(regex("(\\d+\\.\\d+)")))
         ])
     }
 }

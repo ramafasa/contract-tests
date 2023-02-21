@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -15,8 +15,7 @@ import java.util.UUID;
 public class OrderCreatedEvent extends DomainEvent {
 
     private final UUID eventId;
-    private final Instant occurredAt;
-
+    private final LocalDateTime occurredAt;
     private final UUID orderId;
     private final UUID accountId;
     private final BigDecimal total;

@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
@@ -13,6 +13,8 @@ import java.util.UUID;
 public abstract class DomainEvent {
 
     public abstract UUID getEventId();
-    public abstract Instant getOccurredAt();
+
+    public abstract LocalDateTime getOccurredAt();
+
     public abstract String getTopic();
 }
