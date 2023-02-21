@@ -1,9 +1,12 @@
 package com.rmaciak.payment.events;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -13,7 +16,7 @@ import java.util.UUID;
 public class OrderCreatedEvent extends DomainEvent {
 
     private UUID eventId;
-    private Instant occurredAt;
+    private LocalDateTime occurredAt;
 
     private UUID orderId;
     private UUID accountId;

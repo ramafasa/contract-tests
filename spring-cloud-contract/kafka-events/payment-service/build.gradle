@@ -3,7 +3,6 @@ plugins {
     id 'org.springframework.boot' version '3.0.1'
     id 'io.spring.dependency-management' version '1.1.0'
     id 'groovy'
-    id 'org.springframework.cloud.contract' version '4.0.0'
     id 'maven-publish'
 }
 
@@ -37,14 +36,6 @@ dependencies {
 
 test {
     useJUnitPlatform()
-}
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            artifact verifierStubsJar
-        }
-    }
 }
 
 sourceCompatibility = JavaVersion.VERSION_17
