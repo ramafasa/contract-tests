@@ -22,7 +22,6 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 
 @SpringBootTest(classes = [PaymentApplication], webEnvironment = NONE)
 @Testcontainers
-@ActiveProfiles("test")
 class EventHandlerSpec extends Specification {
 
     @Shared
