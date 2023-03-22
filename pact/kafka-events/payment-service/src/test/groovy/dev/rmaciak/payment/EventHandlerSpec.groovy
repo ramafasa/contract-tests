@@ -3,11 +3,9 @@ package dev.rmaciak.payment
 import au.com.dius.pact.consumer.groovy.messaging.PactMessageBuilder
 import au.com.dius.pact.core.model.messaging.Message
 import dev.rmaciak.payment.domain.PaymentRepository
-import dev.rmaciak.payment.events.OrderCreatedEvent
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.kafka.core.KafkaTemplate
-import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.DynamicPropertyRegistry
 import org.springframework.test.context.DynamicPropertySource
 import org.testcontainers.containers.KafkaContainer
@@ -48,7 +46,7 @@ class EventHandlerSpec extends Specification {
             expectsToReceive 'OrderCreatedEvent'
             withContent(contentType: 'application/json') {
                 eventId uuid()
-                occurredAt datetime()
+                occurredAt regexp("\\d{4}-[01]\\d-[0-3]\\dT[0-2]\\d((:[0-5]\\d)?){2}", "2023-03-12T12:46:33")
 
                 orderId uuid()
                 accountId uuid()
