@@ -52,15 +52,15 @@ class ContractVerificationSpec extends Specification {
         consumedEvents.add((String) record.value())
     }
 
-    @TestTemplate
-    @ExtendWith(PactVerificationInvocationContextProvider)
-    void testTemplate(PactVerificationContext context) {
-        context.verifyInteraction()
+    @BeforeEach
+    void setTargetToMessage(PactVerificationContext context) {
+        context.setTarget(new MessageTestTarget())
     }
 
-    @BeforeEach
-    void before(PactVerificationContext context) {
-        context.setTarget(new MessageTestTarget())
+    @TestTemplate
+    @ExtendWith(PactVerificationInvocationContextProvider)
+    void initInteractionVerification(PactVerificationContext context) {
+        context.verifyInteraction()
     }
 
     @PactVerifyProvider('OrderCreatedEvent when order is created')
