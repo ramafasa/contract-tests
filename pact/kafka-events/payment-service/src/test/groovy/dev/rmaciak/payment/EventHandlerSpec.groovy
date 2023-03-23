@@ -43,7 +43,7 @@ class EventHandlerSpec extends Specification {
             serviceConsumer 'payment-service'
             hasPactWith 'order-service'
 
-            expectsToReceive 'OrderCreatedEvent'
+            expectsToReceive 'OrderCreatedEvent when order is created'
             withContent(contentType: 'application/json') {
                 eventId uuid()
                 occurredAt regexp("\\d{4}-[01]\\d-[0-3]\\dT[0-2]\\d((:[0-5]\\d)?){2}", "2023-03-12T12:46:33")

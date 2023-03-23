@@ -59,7 +59,7 @@ public class ContractVerificationTest {
         context.verifyInteraction();
     }
 
-    @PactVerifyProvider("OrderCreatedEvent")
+    @PactVerifyProvider("OrderCreatedEvent when order is created")
     MessageAndMetadata shouldPublishOrderCreatedEvent() {
         orderCreator.createOrder(UUID.randomUUID(), UUID.randomUUID(), BigDecimal.valueOf(10.5));
 
