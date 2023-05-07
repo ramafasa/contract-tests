@@ -20,17 +20,6 @@ public class PaymentHttpApi {
 
     private final PaymentExecutor paymentExecutor;
 
-//    @PutMapping(value = "/payment/{paymentId}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-//    public CreatePaymentResponse createPayment(
-//            @PathVariable UUID paymentId,
-//            @RequestBody CreatePaymentRequest request) {
-//
-//        return new CreatePaymentResponse(
-//                "ext-" + paymentId,
-//                paymentExecutor.initiatePayment(request.quota(), request.paymentType())
-//        );
-//    }
-
     @ExceptionHandler({NonPositivePaymentQuotaException.class})
     public ResponseEntity<CreatePaymentResponse> handleException() {
         HttpHeaders headers = new HttpHeaders();
