@@ -1,0 +1,69 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.0.1'
+    id 'io.spring.dependency-management' version '1.1.0'
+    id 'groovy'
+    id 'maven-publish'
+    id 'org.jetbrains.kotlin.jvm' version '1.8.0'
+    id "au.com.dius.pact" version "4.3.6"
+}
+
+apply plugin: 'maven-publish'
+
+group 'dev.maciak'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation group: 'org.springframework.kafka', name: 'spring-kafka', version: '3.0.2'
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    testImplementation 'org.testcontainers:spock:1.17.6'
+    testImplementation 'org.testcontainers:kafka:1.17.6'
+    testImplementation 'au.com.dius.pact.consumer:groovy:4.4.4'
+    testImplementation 'au.com.dius.pact.provider:junit5spring:4.2.21'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.spockframework:spock-core:2.4-M1-groovy-4.0'
+    testImplementation 'org.spockframework:spock-spring:2.4-M1-groovy-4.0'
+    testImplementation 'org.apache.groovy:groovy-all:4.0.6'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+
+}
+
+test {
+    useJUnitPlatform()
+    systemProperty 'pact.provider.version', project.version
+    systemProperty 'pact.verifier.publishResults', 'true'
+}
+
+compileTestGroovy {
+    groovyClasspath = configurations.testCompileClasspath
+}
+
+pact {
+    publish {
+        pactBrokerUrl = 'http://localhost:9292/'
+    }
+}
+
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
+
+tasks.withType(JavaCompile) {
+    options.compilerArgs += "--enable-preview"
+}
+
+tasks.withType(JavaExec) {
+    jvmArgs += '--enable-preview'
+}
+
+tasks.withType(Test) {
+    jvmArgs += "--enable-preview"
+}
